@@ -19,3 +19,7 @@ This is a social media web application project of the Software Engineering progr
 This webapp is deployed to Github pages
 
 - [Deployment Link](https://johansuarezr.github.io/se_project_spots/)
+
+## Explanation Video
+
+- https://drive.google.com/file/d/1bADrZmA0eluLaws9AP1l4cCacTNbHfsk/view?usp=drive_link
