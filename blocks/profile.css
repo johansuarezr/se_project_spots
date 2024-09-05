@@ -117,7 +117,8 @@
   }
 
   .profile__edit-button {
-    padding: 0 25px 0 25px;
+    padding: 0 25px;
+    margin-bottom: 0;
   }
 
   .profile__add-button {

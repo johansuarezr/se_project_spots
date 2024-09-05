@@ -22,4 +22,4 @@ This webapp is deployed to Github pages
 
 ## Explanation Video
 
-- https://drive.google.com/file/d/1bADrZmA0eluLaws9AP1l4cCacTNbHfsk/view?usp=drive_link
+- https://drive.google.com/file/d/1bADrZmA0eluLaws9AP1l4cCacTNbHfsk/view?usp=sharing
