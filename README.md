@@ -6,8 +6,9 @@ This is a social media web application project of the Software Engineering progr
 
 ## Tech Stack and Techniques
 
-- HTML
+- HTML 
 - CSS
+- Javascript
 - Figma
 - Responsive Design
 - BEM
