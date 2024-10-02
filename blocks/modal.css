@@ -133,11 +133,13 @@
   }
 
   .modal__container {
-    padding: 0;
+    padding: 12px;
   }
 
   .modal__container_type_preview {
-    width: fit-content;
+    max-width: none;
+    max-height: none;
+    width: 100%;
   }
 
   .modal__title {
