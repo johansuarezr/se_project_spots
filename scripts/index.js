@@ -63,10 +63,11 @@ const previewModalCloseButton = previewModal.querySelector(
 
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  const InputValues = { name: cardNameInput.value, link: cardLinkInput.value };
-  const cardElement = getCardElement(InputValues);
+  const inputValues = { name: cardNameInput.value, link: cardLinkInput.value };
+  const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   closeModal(cardModal);
+  cardForm.reset();
 }
 
 function getCardElement(data) {
@@ -88,7 +89,6 @@ function getCardElement(data) {
   });
 
   cardDeleteButton.addEventListener("click", () => {
-    cardDeleteButton.classList.toggle("card__delete-button:hover");
     cardElement.remove();
   });
 
