@@ -47,6 +47,7 @@ const editModalDescriptionInput = profileEditModal.querySelector(
 
 const cardModal = document.querySelector("#add-card-modal");
 const cardForm = cardModal.querySelector(".modal__form");
+const cardSubmitButton = cardModal.querySelector(".modal__submit-button");
 const cardModalCloseButton = cardModal.querySelector(".modal__close-button");
 const cardNameInput = cardModal.querySelector("#add-card-name-input");
 const cardLinkInput = cardModal.querySelector("#add-card-link-input");
@@ -66,8 +67,9 @@ function handleAddCardSubmit(evt) {
   const inputValues = { name: cardNameInput.value, link: cardLinkInput.value };
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
-  closeModal(cardModal);
   cardForm.reset();
+  disableButton(cardSubmitButton);
+  closeModal(cardModal);
 }
 
 function getCardElement(data) {
@@ -108,10 +110,30 @@ previewModalCloseButton.addEventListener("click", () => {
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  modal.addEventListener("mousedown", handleCloseOverlay);
+  document.addEventListener("keydown", handleEscKeyPress);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  modal.removeEventListener("mousedown", handleCloseOverlay);
+  document.removeEventListener("keydown", handleEscKeyPress);
+}
+
+function handleCloseOverlay(evt) {
+  if (evt.target.classList.contains("modal_opened")) {
+    closeModal(evt.target);
+  }
+}
+
+function handleEscKeyPress(evt) {
+  if (evt.key === "Escape") {
+    const openModal = document.querySelector(".modal_opened");
+    if (openModal) {
+      closeModal(openModal);
+      document.addEventListener("keydown", handleEscKeyPress);
+    }
+  }
 }
 
 function handleProfileFormSubmit(evt) {
@@ -124,6 +146,10 @@ function handleProfileFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
+  resetValidation(profileFormElement, [
+    editModalNameInput,
+    editModalDescriptionInput,
+  ]);
   openModal(profileEditModal);
 });
 
