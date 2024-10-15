@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a social media web application project of the Software Engineering program at TripleTen. It was created using HTML and CSS, based on the design brief in Figma.
+This is a social media web application project of the Software Engineering program at TripleTen. It was created using HTML, CSS and Javascripts, based on the design brief in Figma.
 
 ## Tech Stack and Techniques
 
