@@ -68,7 +68,7 @@ function handleAddCardSubmit(evt) {
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   cardForm.reset();
-  disableButton(cardSubmitButton);
+  disableButton(cardSubmitButton, settings);
   closeModal(cardModal);
 }
 
@@ -131,7 +131,6 @@ function handleEscKeyPress(evt) {
     const openModal = document.querySelector(".modal_opened");
     if (openModal) {
       closeModal(openModal);
-      document.addEventListener("keydown", handleEscKeyPress);
     }
   }
 }
@@ -146,10 +145,6 @@ function handleProfileFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
-  resetValidation(profileFormElement, [
-    editModalNameInput,
-    editModalDescriptionInput,
-  ]);
   openModal(profileEditModal);
 });
 
