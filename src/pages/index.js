@@ -1,5 +1,9 @@
 import "./index.css";
-import { enableValidation, settings } from "../scripts/validation.js";
+import {
+  enableValidation,
+  settings,
+  resetValidation,
+} from "../scripts/validation.js";
 import { setButtonText } from "../utils/helpers.js";
 import Api from "../utils/Api.js";
 
@@ -119,21 +123,20 @@ let selectedCardId;
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
   const submitButton = evt.submitter;
+  submitButton.disabled = true;
   setButtonText(submitButton, true);
   api
     .getNewCard({ name: cardNameInput.value, link: cardLinkInput.value })
     .then((data) => {
-      const inputValues = {
-        name: cardNameInput.value,
-        link: cardLinkInput.value,
-      };
-      const cardElement = getCardElement(inputValues);
+      const cardElement = getCardElement(data);
       cardsList.prepend(cardElement);
       cardForm.reset();
+      resetValidation(cardForm, settings);
       closeModal(cardModal);
     })
     .catch(console.error)
     .finally(() => {
+      submitButton.disabled = false;
       setButtonText(submitButton, false);
     });
 }
@@ -148,6 +151,8 @@ function handleAvatarSubmit(evt) {
       const avatar = document.querySelector(".profile__avatar");
       avatar.src = data.avatar;
       avatar.alt = `${data.name}'s avatar`;
+      avatarForm.reset();
+      resetValidation(avatarForm, settings);
       closeModal(avatarModal);
       avatarForm.reset();
     })
@@ -199,7 +204,7 @@ function getCardElement(data) {
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
 
-  if (data.likes && data.likes.some((user) => user.id === currentUser._id)) {
+  if (data && data.isLiked) {
     cardLikeButton.classList.add("card__like-button_liked");
   }
 
@@ -235,6 +240,13 @@ function openModal(modal) {
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  const formEl = modal.querySelector(settings.formSelector);
+
+  if (formEl) {
+    formEl.reset();
+    resetValidation(formEl, settings);
+  }
+
   modal.removeEventListener("mousedown", handleCloseOverlay);
   document.removeEventListener("keydown", handleEscKeyPress);
 }
@@ -267,6 +279,8 @@ function handleProfileFormSubmit(evt) {
     .then((data) => {
       profileName.textContent = editModalNameInput.value;
       profileDescription.textContent = editModalDescriptionInput.value;
+      profileFormElement.reset();
+      resetValidation(profileFormElement, settings);
       closeModal(profileEditModal);
     })
     .catch(console.error)
@@ -278,10 +292,13 @@ function handleProfileFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescriptionInput.value = profileDescription.textContent;
+  resetValidation(profileFormElement, settings);
   openModal(profileEditModal);
 });
 
 editModalCloseButton.addEventListener("click", () => {
+  cardForm.reset();
+  resetValidation(cardForm, settings);
   closeModal(profileEditModal);
 });
 
