@@ -44,15 +44,12 @@ const api = new Api({
     authorization: "d877d9ca-fa5a-4a86-b84e-0c723af83297",
     "Content-Type": "application/json",
   },
-  userInfoUrl: "https://around-api.en.tripleten-services.com/v1",
 });
 
 api
   .getAppInfo()
   .then(([cards, userInfo]) => {
     const avatar = document.querySelector(".profile__avatar");
-    const profileName = document.querySelector(".profile__name");
-    const profileDescription = document.querySelector(".profile__description");
 
     avatar.src = userInfo.avatar;
     avatar.alt = `${userInfo.name}'s avatar`;
@@ -134,9 +131,8 @@ function handleAddCardSubmit(evt) {
       resetValidation(cardForm, settings);
       closeModal(cardModal);
     })
-    .catch(console.error)
+    .catch(console.error, (submitButton.disabled = false))
     .finally(() => {
-      submitButton.disabled = false;
       setButtonText(submitButton, false);
     });
 }
@@ -154,7 +150,6 @@ function handleAvatarSubmit(evt) {
       avatarForm.reset();
       resetValidation(avatarForm, settings);
       closeModal(avatarModal);
-      avatarForm.reset();
     })
     .catch(console.error)
     .finally(() => {
@@ -240,12 +235,6 @@ function openModal(modal) {
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  const formEl = modal.querySelector(settings.formSelector);
-
-  if (formEl) {
-    formEl.reset();
-    resetValidation(formEl, settings);
-  }
 
   modal.removeEventListener("mousedown", handleCloseOverlay);
   document.removeEventListener("keydown", handleEscKeyPress);
@@ -280,7 +269,6 @@ function handleProfileFormSubmit(evt) {
       profileName.textContent = editModalNameInput.value;
       profileDescription.textContent = editModalDescriptionInput.value;
       profileFormElement.reset();
-      resetValidation(profileFormElement, settings);
       closeModal(profileEditModal);
     })
     .catch(console.error)
@@ -298,7 +286,6 @@ profileEditButton.addEventListener("click", () => {
 
 editModalCloseButton.addEventListener("click", () => {
   cardForm.reset();
-  resetValidation(cardForm, settings);
   closeModal(profileEditModal);
 });
 
