@@ -3,6 +3,7 @@ import {
   enableValidation,
   settings,
   resetValidation,
+  disableButton,
 } from "../scripts/validation.js";
 import { setButtonText } from "../utils/helpers.js";
 import Api from "../utils/Api.js";
@@ -127,7 +128,7 @@ function handleAddCardSubmit(evt) {
       const cardElement = getCardElement(data);
       cardsList.prepend(cardElement);
       cardForm.reset();
-      cardSubmitButton.disabled;
+      disableButton(cardSubmitButton, settings);
       closeModal(cardModal);
     })
     .catch((err) => {
