@@ -150,10 +150,13 @@ function handleAvatarSubmit(evt) {
       avatar.src = data.avatar;
       avatar.alt = `${data.name}'s avatar`;
       avatarForm.reset();
-      avatarSubmitButton.disabled;
+      disableButton(avatarSubmitButton, settings);
       closeModal(avatarModal);
     })
-    .catch(console.error)
+    .catch((err) => {
+      console.error(err);
+      submitButton.disabled = false;
+    })
     .finally(() => {
       setButtonText(submitButton, false);
     });
@@ -172,6 +175,7 @@ function handleDeleteSubmit(evt) {
     .catch(console.error)
     .finally(() => {
       setButtonText(submitButton, false, "Deleting...", "Delete");
+      submitButton.disabled = false;
     });
 }
 

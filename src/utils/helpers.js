@@ -9,6 +9,5 @@ export function setButtonText(
     btn.disabled = true;
   } else {
     btn.textContent = defaultText;
-    btn.disabled = false;
   }
 }
